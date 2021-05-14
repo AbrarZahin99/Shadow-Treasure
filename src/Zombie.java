@@ -1,34 +1,23 @@
 import bagel.Image;
 import bagel.util.Point;
 
-public class Zombie{
+public class Zombie extends Immovables{
 
-    // image and type
-    private final Image image = new Image("res/images/zombie.png");
 
-    // render position
-    private Point pos;
-
-    public Zombie(double x, double y){
-        this.pos = new Point(x,y);
+    public Zombie(double x, double y) {
+        super(x, y);
+        image = new Image("res/images/player.png");
     }
 
-    public Point getPos() {
-        return pos;
-    }
-
-    // render image
-    public void draw() {
-        image.drawFromTopLeft(pos.x, pos.y);
-    }
-
-    public boolean meets(Player player) {
-        boolean hasMet = false;
-        double distanceToPlayer = player.getPos().distanceTo(pos);
-        if (distanceToPlayer < ShadowTreasureComplete.ClOSENESS) {
-            hasMet = true;
+    public boolean shot(Bullet bullet){
+        boolean isShot = false;
+        double distanceToBullet = Bullet.getPos().distanceTo(pos);
+        if (distanceToBullet < ShadowTreasureComplete.ClOSENESS) {
+            isShot = true;
         }
-        return hasMet;
+        return isShot;
+
     }
 
 }
+

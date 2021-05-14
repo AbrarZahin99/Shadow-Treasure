@@ -5,9 +5,7 @@ import bagel.util.Colour;
 import bagel.util.Point;
 import bagel.util.Vector2;
 
-public class Player{
-
-    // image source file
+public class Bullet {
     public static final String FILENAME = "res/images/player.png";
     // speed
     public static final double STEP_SIZE = 10;
@@ -31,7 +29,7 @@ public class Player{
     // healthbar parameters
     private int energy;
 
-    public Player(double x, double y, int energy) {
+    public Bullet(double x, double y, int energy) {
         this.image = new Image(FILENAME);
         this.pos = new Point(x,y);
         //this.directionX = 0;
