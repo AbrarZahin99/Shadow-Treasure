@@ -8,7 +8,7 @@ public class Immovables {
     // render position
     protected Point pos;
 
-    private boolean stillExists;
+    protected boolean stillExists;
 
     public Immovables(double x, double y){
         this.pos = new Point(x,y);
@@ -19,9 +19,6 @@ public class Immovables {
         this.pos = pos;
     }
 
-   // public void setImage(Image image) {
-  //      this.image = new Image(image)
-  //  }
 
     // render image
     public void draw() {
@@ -31,7 +28,7 @@ public class Immovables {
     public boolean meets(Player player) {
         boolean hasMet = false;
         double distanceToPlayer = player.getPos().distanceTo(pos);
-        if (distanceToPlayer < ShadowTreasureComplete.ClOSENESS) {
+        if (distanceToPlayer < ShadowTreasure.ClOSENESS) {
             hasMet = true;
         }
         return hasMet;

@@ -6,17 +6,17 @@ public class Zombie extends Immovables{
 
     public Zombie(double x, double y) {
         super(x, y);
-        image = new Image("res/images/player.png");
+        image = new Image("res/images/zombie.png");
+        this.stillExists = true;
     }
 
-    public boolean shot(Bullet bullet){
+    public boolean shot(Player bullet){
         boolean isShot = false;
-        double distanceToBullet = Bullet.getPos().distanceTo(pos);
-        if (distanceToBullet < ShadowTreasureComplete.ClOSENESS) {
+        double distanceToBullet = bullet.getPos().distanceTo(pos);
+        if (distanceToBullet < ShadowTreasure.ClOSENESS) {
             isShot = true;
         }
         return isShot;
-
     }
 
 }

@@ -1,17 +1,16 @@
 import bagel.Image;
 import bagel.util.Point;
 
-public class Sandwich{
+public class Sandwich extends Immovables{
     // image
-    private final Image image = new Image("res/images/sandwich.png");
-    private boolean visible;
 
     // render position
     private Point pos;
 
     public Sandwich(double x, double y){
-        this.pos = new Point(x,y);
-        this.visible = true;
+        super(x,y);
+        this.stillExists = true;
+        image = new Image("res/images/sandwich.png");
     }
 
     public Point getPos() {
@@ -37,7 +36,7 @@ public class Sandwich{
 
         if (visible){
             double distanceToPlayer = player.getPos().distanceTo(pos);
-            if (distanceToPlayer < ShadowTreasureComplete.ClOSENESS) {
+            if (distanceToPlayer < ShadowTreasure.ClOSENESS) {
                 hasMet = true;
             }
         }

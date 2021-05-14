@@ -7,32 +7,33 @@ import bagel.util.Vector2;
 
 public abstract class Movables {
 
-    // image and type
+    // image
     protected static Image image;
     // render position
-    private Point pos;
+    protected double posX;
+    protected double posY;
     // direction
-    private double directionX;
-    private double directionY;
+    protected double directionX;
+    protected double directionY;
 
-
-    public Movables(double x, double y) {
-        this.pos = new Point(x,y);
+    public Movables(double posX, double posY) {
+        this.posX = posX;
+        this.posY = posY;
     }
 
-
-
+    /* Points towards a certain point */
     public void setDirectionTo(Point Dest){
-        double Len = pos.distanceTo(Dest);
-        directionX = (Dest.x - pos.x)/Len;
-        directionY = (Dest.y - pos.y)/Len;
+        double Len = new Point(posX, posY).distanceTo(Dest);
+        directionX = (Dest.x - posX)/Len;
+        directionY = (Dest.y - posY)/Len;
     }
+
     /* Method to move the player forward */
     public abstract void moveForward();
 
-
+    /* Method to render the image */
     public void render(){
-        image.drawFromTopLeft(pos.x, pos.y);
+        image.drawFromTopLeft(posX, posY);
     }
 
 }

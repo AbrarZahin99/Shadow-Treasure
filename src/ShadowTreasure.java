@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * An example Bagel game.
  */
-public class ShadowTreasureComplete extends AbstractGame {
+public class ShadowTreasure extends AbstractGame {
 
     private final Image BACKGROUND = new Image("res/images/background.png");
     public static final int ClOSENESS = 50;
@@ -28,7 +28,7 @@ public class ShadowTreasureComplete extends AbstractGame {
     // end of game indicator
     private boolean endOfGame;
 
-    public ShadowTreasureComplete() throws IOException {
+    public ShadowTreasure() throws IOException {
         //super(900, 600, "Treasure Hunt");
         this.loadEnvironment("res/IO/environment.csv");
         this.tick = 1;
@@ -85,8 +85,8 @@ public class ShadowTreasureComplete extends AbstractGame {
                 System.out.println(df.format(player.getPos().x) + "," + df.format(player.getPos().y) + "," + player.getEnergy());
             }
             tick++;
-            sandwich.draw();
-            zombie.draw();
+            sandwiches.get(0).draw();
+            zombies.get(0).draw();
             player.render();
         }
     }
@@ -96,7 +96,7 @@ public class ShadowTreasureComplete extends AbstractGame {
      * The entry point for the program.
      */
     public static void main(String[] args) throws IOException {
-        ShadowTreasureComplete game = new ShadowTreasureComplete();
+        ShadowTreasure game = new ShadowTreasure();
         game.run();
     }
 }
