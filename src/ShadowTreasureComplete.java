@@ -2,6 +2,7 @@ import bagel.*;
 
 import java.io.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * An example Bagel game.
@@ -20,8 +21,9 @@ public class ShadowTreasureComplete extends AbstractGame {
 
     // list of characters
     private Player player;
-    private Sandwich sandwich;
-    private Zombie zombie;
+    private ArrayList<Sandwich> sandwiches = new ArrayList<Sandwich>();
+    private ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+    private Treasure treasure;
 
     // end of game indicator
     private boolean endOfGame;
@@ -34,13 +36,6 @@ public class ShadowTreasureComplete extends AbstractGame {
         System.out.println(player.getPos().x + "," + player.getPos().y + "," + player.getEnergy());
     }
 
-    public Sandwich getSandwich() {
-        return sandwich;
-    }
-
-    public Zombie getZombie() {
-        return zombie;
-    }
 
     public void setEndOfGame(boolean endOfGame) {
         this.endOfGame = endOfGame;
@@ -60,8 +55,9 @@ public class ShadowTreasureComplete extends AbstractGame {
                 int y = Integer.parseInt(parts[2]);
                 switch (type) {
                     case "Player" -> this.player = new Player(x, y, Integer.parseInt(parts[3]));
-                    case "Zombie"  -> this.zombie = new Zombie(x, y);
-                    case "Sandwich"  -> this.sandwich =new Sandwich(x, y);
+                    case "Zombie"  -> zombies.add(new Zombie(x,y));
+                    case "Sandwich"  -> sandwiches.add(new Sandwich(x, y));
+                   // case "Treasure" -> this.treasure = new Treasure(x,y);
                     default    -> throw new BagelError("Unknown type: " + type);
                 }
             }

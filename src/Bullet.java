@@ -5,7 +5,7 @@ import bagel.util.Colour;
 import bagel.util.Point;
 import bagel.util.Vector2;
 
-public class Bullet {
+/*public class Bullet {
     public static final String FILENAME = "res/images/player.png";
     // speed
     public static final double STEP_SIZE = 10;
@@ -97,4 +97,4 @@ public class Bullet {
         energy -= 3;
     }
     public void shootBullet(){ energy -= 3; }
-}
+}*/
