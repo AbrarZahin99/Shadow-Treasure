@@ -3,6 +3,7 @@ import bagel.*;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * An example Bagel game.
@@ -20,9 +21,9 @@ public class ShadowTreasure extends AbstractGame {
     private int tick;
 
     // list of characters
-    private Player player;
-    private ArrayList<Sandwich> sandwiches = new ArrayList<Sandwich>();
-    private ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+    public Player player;
+    public ArrayList<Sandwich> sandwiches = new ArrayList<Sandwich>();
+    public ArrayList<Zombie> zombies = new ArrayList<Zombie>();
     private Treasure treasure;
 
     // end of game indicator
@@ -79,14 +80,23 @@ public class ShadowTreasure extends AbstractGame {
             BACKGROUND.drawFromTopLeft(0, 0);
             // Update status when the TICK_CYCLE is up
             if (tick > TICK_CYCLE) {
+                for(Zombie z: zombies) {
+                    z.distanceToPlayer(player);
+                }
+                Collections.sort(sandwiches);
+                Collections.sort(zombies);
                 // update player status
                 player.update(this);
                 tick = 1;
                 System.out.println(df.format(player.getPos().x) + "," + df.format(player.getPos().y) + "," + player.getEnergy());
             }
             tick++;
-            sandwiches.get(0).draw();
-            zombies.get(0).draw();
+            for(int i = 0; i<zombies.size(); i++){
+                zombies.get(i).draw();
+            }
+            for(int i = 0; i<sandwiches.size(); i++) {
+                sandwiches.get(i).draw();
+            }
             player.render();
         }
     }

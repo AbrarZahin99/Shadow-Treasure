@@ -1,3 +1,7 @@
-﻿Player,650,100,2
-Zombie,300,200
-Sandwich,500,400
+﻿Player,700,100,4
+Zombie,650,600,
+Zombie,150,300,
+Sandwich,100,150,
+Sandwich,500,650,
+Sandwich,400,500,
+Zombie,700,200,

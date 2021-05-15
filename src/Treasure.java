@@ -1,2 +1,2 @@
-public class Treasure {
+public class Treasure extends Immovables {
 }

@@ -3,7 +3,6 @@ import bagel.util.Point;
 
 public class Zombie extends Immovables{
 
-
     public Zombie(double x, double y) {
         super(x, y);
         image = new Image("res/images/zombie.png");
@@ -18,6 +17,7 @@ public class Zombie extends Immovables{
         }
         return isShot;
     }
+
 
 }
 

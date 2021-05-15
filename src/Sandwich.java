@@ -2,46 +2,20 @@ import bagel.Image;
 import bagel.util.Point;
 
 public class Sandwich extends Immovables{
-    // image
 
-    // render position
-    private Point pos;
-
-    public Sandwich(double x, double y){
-        super(x,y);
-        this.stillExists = true;
+    public Sandwich(double x, double y) {
+        super(x, y);
         image = new Image("res/images/sandwich.png");
+        this.stillExists = true;
     }
 
-    public Point getPos() {
-        return pos;
-    }
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visiblility) {
-        this.visible = visiblility;
-    }
-
-    // render image
-    public void draw() {
-        if (visible) {
-            image.drawFromTopLeft(pos.x, pos.y);
+    public boolean eaten(Player player){
+        boolean isEaten = false;
+        double distanceToplayer = player.getPos().distanceTo(pos);
+        if (distanceToplayer < ShadowTreasure.ClOSENESS) {
+            isEaten = true;
         }
+        return isEaten;
     }
-
-    public boolean meets(Player player) {
-        boolean hasMet = false;
-
-        if (visible){
-            double distanceToPlayer = player.getPos().distanceTo(pos);
-            if (distanceToPlayer < ShadowTreasure.ClOSENESS) {
-                hasMet = true;
-            }
-        }
-        return hasMet;
-    }
-
 
 }
