@@ -1,77 +1,80 @@
-import bagel.DrawOptions;
+import bagel.*;
 import bagel.Font;
-import bagel.Image;
 import bagel.util.Colour;
 import bagel.util.Point;
 
-import java.util.Collections;
 
 public class Player extends Movables{
 
-    // image source file
-    public static final String FILENAME = "res/images/player.png";
-    // speed
+    // Steps moved every tick_cycle
     public static final double STEP_SIZE = 10;
     // energy level threshold
-    private static final int LOWENERGY = 3;
-    private boolean treasure_reached = false;
-    // healthbar font
+    public static final int LOW_ENERGY = 3;
+
+    //  font parameters
     private final Font FONT = new Font("res/font/DejaVuSans-Bold.ttf", 20);
     private final DrawOptions OPT = new DrawOptions();
 
-
-
-    // healthbar parameters
+    // displays the energy
     private int energy;
-    private Zombie closestZombie;
-    private Sandwich closestSandwich;
 
+    // boolean to keep track of whether treasure was reached
+    private boolean treasure_reached = false;
+
+    // constructor for the player class
     public Player(double x, double y, int energy) {
         super(x,y);
         this.energy = energy;
-        image = new Image("res/images/player.png");
-    }
-
-    public int getEnergy(){
-        return this.energy;
+        setImage("res/images/player.png");
     }
 
     public Point getPos(){
-        return new Point(posX, posY);
+        return new Point(getPosX(), getPosY());
     }
 
-
     /* Method to move the player forward */
-    public void moveForward(){
-        posX += STEP_SIZE * directionX;
-        posY += STEP_SIZE * directionY;
+    @Override
+    protected void moveForward(){
+        setPosX(getPosX() + STEP_SIZE * getDirectionX()) ;
+        setPosY(getPosY() + STEP_SIZE * getDirectionY());
     }
 
     public void update(ShadowTreasure tomb){
-        // Check if the player meets the Zombie and if so reduce energy by 3 and
-        // terminate. Otherwise if the player meets the Sandwich increase the energy
-        // an set the Sandwich to invisible
-     //   Collections.sort(tomb.zombies);
-        closestZombie = tomb.zombies.get(0);
-        closestSandwich = tomb.sandwiches.get(0);
+        Zombie closestZombie;
+        Sandwich closestSandwich;
 
-        if (treasure_reached || (tomb.sandwiches.size()==0 &&
-                tomb.zombies.size() >0 && energy < 3)) {
-            render
-
-            if (closestZombie != null && closestZombie.meets(this)) {
-                shootBullet();
-                tomb.zombies.remove(0);
-
-            } else if (closestSandwich != null && closestSandwich.meets(this)) {
-                eatSandwich();
-                tomb.sandwiches.remove(0);
+        if(tomb.getZombies().size() > 0) {closestZombie = tomb.getZombies().get(0);}
+        else{ closestZombie = null;}
+        if(tomb.getSandwiches().size() >0) {closestSandwich = tomb.getSandwiches().get(0);}
+        else{closestSandwich = null;}
+        if (tomb.getTreasure().meets(this) && tomb.getZombies().size() == 0){
+            treasure_reached = true;
+        }
+        if (treasure_reached || (tomb.getSandwiches().size()==0 && tomb.getZombies().size() >0
+                && energy < LOW_ENERGY && (!tomb.getBullet().getIsPresent()))) {
+            System.out.print(energy);
+            if (treasure_reached){
+                System.out.println(",success!");
             }
-            // set direction
-            if (this.energy >= LOWENERGY) {
+            Window.close();}
+        else {
+            if (closestSandwich != null && closestSandwich.meets(this)) {
+                eatSandwich();
+                tomb.getSandwiches().remove(0);
+            }
+            else if ((closestZombie != null && closestZombie.getDistanceToPlayer()
+                    < ShadowTreasure.SHOOTING_RANGE && this.energy >= LOW_ENERGY)
+                    || tomb.getBullet().getIsPresent()) {
+                tomb.getBullet().update(tomb);
+            }
+  //          if (tomb.bullet.isPresent){System.out.println(tomb.bullet);}
+            if (tomb.getZombies().size() == 0){
+                setDirectionTo(tomb.getTreasure().getPos());
+            }
+            else if (this.energy >= LOW_ENERGY && closestZombie != null) {
                 // direction to zombie
                 setDirectionTo(closestZombie.getPos());
-            } else {
+            } else if (closestSandwich != null){
                 // direction to sandwich
                 setDirectionTo(closestSandwich.getPos());
             }
@@ -84,25 +87,19 @@ public class Player extends Movables{
     /* Renders the images of the player and the font */
     @Override
     public void render() {
-        image.drawFromTopLeft(posX, posY);
+        getImage().drawFromTopLeft(getPosX(), getPosY());
         // also show energy level
         if (!treasure_reached) {
             FONT.drawString("energy: " + energy, 20, 760, OPT.setBlendColour(Colour.BLACK));
         }
-        if (treasure_reached) {
-            FONT.drawString("energy: " + energy +
-                    "success!", 20, 760, OPT.setBlendColour(Colour.BLACK));
-        }
     }
 
-    public void eatSandwich(){
+    private void eatSandwich(){
         energy += 5;
     }
 
     public void shootBullet(){
-        energy -= 3; }
-
-    public void treasure_reached(){
-        this.treasure_reached = true:
+        energy -= 3;
     }
+
 }

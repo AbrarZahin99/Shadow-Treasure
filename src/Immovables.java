@@ -3,48 +3,59 @@ import bagel.util.Point;
 
 public class Immovables implements Comparable<Immovables>{
     // image and type
-    protected Image image;
+    private Image image;
 
     // render position
-    protected Point pos;
+    private final Point pos;
 
-    public double distanceToPlayer;
+    // Keeps record of player's distance from each zombie
+    private double distanceToPlayer;
 
-    protected boolean stillExists = true;
-
+    // Constructor for the Immovable class
     public Immovables(double x, double y){
         this.pos = new Point(x,y);
     }
 
+    // Getters and setters
     public Point getPos() {
         return pos;
     }
 
-    public void distanceToPlayer(Player player){
-        this.distanceToPlayer = player.getPos().distanceTo(pos);
+    protected void setImage(String string) {
+        this.image = new Image(string);
     }
 
-    // render image
+    public double getDistanceToPlayer() {
+        return distanceToPlayer;
+    }
+
+    public void setDistanceToPlayer(double distanceToPlayer) {
+        this.distanceToPlayer = distanceToPlayer;
+    }
+
+    // Calculates distance to Player
+    public double distanceToPlayer(Player player){
+        return player.getPos().distanceTo(pos);
+    }
+    // renders image
     public void draw() {
         image.drawFromTopLeft(pos.x, pos.y);
     }
 
-    public boolean meets(Player player) {
+    // Checks whether player is close enough
+    public boolean meets(Movables movable) {
         boolean hasMet = false;
-        double distanceToPlayer = player.getPos().distanceTo(pos);
+        double distanceToPlayer = movable.getPos().distanceTo(pos);
         if (distanceToPlayer < ShadowTreasure.ClOSENESS) {
             hasMet = true;
         }
         return hasMet;
     }
 
+    // Compares Immovable objects based on distance to player, which has been
+    // implemented in order to sort the arraylists using comparable interface
     public int compareTo(Immovables other){
-        if (other.distanceToPlayer < this.distanceToPlayer)
-            return 1;
-        else if (other.distanceToPlayer > this.distanceToPlayer)
-            return -1;
-        else
-            return 0;
+        return Double.compare(this.distanceToPlayer, other.distanceToPlayer);
     }
 
 }
