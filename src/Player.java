@@ -19,7 +19,7 @@ public class Player extends Movables{
     private int energy;
 
     // boolean to keep track of whether treasure was reached
-    private boolean treasure_reached = false;
+    public boolean treasure_reached = false;
 
     // constructor for the player class
     public Player(double x, double y, int energy) {
@@ -39,25 +39,32 @@ public class Player extends Movables{
         setPosY(getPosY() + STEP_SIZE * getDirectionY());
     }
 
+    // Some code has been copied from sample solution
     public void update(ShadowTreasure tomb){
         Zombie closestZombie;
         Sandwich closestSandwich;
 
-        if(tomb.getZombies().size() > 0) {closestZombie = tomb.getZombies().get(0);}
+        // Gets closestZombie and closestSandwich
+        if(tomb.getZombies().size() > 0) { closestZombie = tomb.getZombies().get(0);}
         else{ closestZombie = null;}
-        if(tomb.getSandwiches().size() >0) {closestSandwich = tomb.getSandwiches().get(0);}
+        if(tomb.getSandwiches().size() >0) { closestSandwich = tomb.getSandwiches().get(0);}
         else{closestSandwich = null;}
+        //
         if (tomb.getTreasure().meets(this) && tomb.getZombies().size() == 0){
-            treasure_reached = true;
+            treasure_obtained();
         }
+        // Code to check end of game
         if (treasure_reached || (tomb.getSandwiches().size()==0 && tomb.getZombies().size() >0
                 && energy < LOW_ENERGY && (!tomb.getBullet().getIsPresent()))) {
             System.out.print(energy);
+            tomb.setEndOfGame(true);
             if (treasure_reached){
                 System.out.println(",success!");
             }
             Window.close();}
-        else {
+        else
+            // Code determining whether player close enough to shoot or eat
+            {
             if (closestSandwich != null && closestSandwich.meets(this)) {
                 eatSandwich();
                 tomb.getSandwiches().remove(0);
@@ -67,7 +74,7 @@ public class Player extends Movables{
                     || tomb.getBullet().getIsPresent()) {
                 tomb.getBullet().update(tomb);
             }
-  //          if (tomb.bullet.isPresent){System.out.println(tomb.bullet);}
+            // Code determining which direction the player should go to
             if (tomb.getZombies().size() == 0){
                 setDirectionTo(tomb.getTreasure().getPos());
             }
@@ -93,13 +100,17 @@ public class Player extends Movables{
             FONT.drawString("energy: " + energy, 20, 760, OPT.setBlendColour(Colour.BLACK));
         }
     }
-
+    // Eats and increases energy by 5
     private void eatSandwich(){
         energy += 5;
     }
-
+    //  Shoots and decreases energy by 3
     public void shootBullet(){
         energy -= 3;
+    }
+    // Treasure obtained and game ends next turn
+    public void treasure_obtained(){
+        treasure_reached = true;
     }
 
 }

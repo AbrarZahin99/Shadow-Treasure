@@ -1,8 +1,12 @@
+import java.util.ArrayList;
+import bagel.util.Point;
+
 public class Bullet extends Movables {
 
     public static final double STEP_SIZE = 25;
     public static final int KILLING_RANGE = 25;
     private boolean isPresent = false;
+    private ArrayList<Point> bullets = new ArrayList<>();
 
     /* Constructor for the bullet class */
     public Bullet(double x, double y) {
@@ -13,6 +17,10 @@ public class Bullet extends Movables {
     /* Getter for isPresent */
     public boolean getIsPresent() {
         return isPresent;
+    }
+
+    public ArrayList<Point> getBullets() {
+        return bullets;
     }
 
     /* Method to move the bullet forward */
@@ -28,13 +36,13 @@ public class Bullet extends Movables {
         logic from Algorithm 1 */
         Zombie closestZombie = null;
         if(tomb.getZombies().size() > 0) {closestZombie = tomb.getZombies().get(0);}
-        if (!this.isPresent && tomb.getZombies().size() > 0) {
+        if (closestZombie != null && !this.isPresent && tomb.getZombies().size() > 0) {
             tomb.getPlayer().shootBullet();
             setPosX(tomb.getPlayer().getPosX());
             setPosY(tomb.getPlayer().getPosY());
             this.isPresent = true;
             this.setDirectionTo(closestZombie.getPos());
-            System.out.println(this);
+            bullets.add(this.getPos());
         }
 
         if(tomb.getZombies().size() == 0) this.isPresent = false;
@@ -47,9 +55,8 @@ public class Bullet extends Movables {
                 tomb.getZombies().remove(0);
             }
         }
-        System.out.println(this);
+        bullets.add(this.getPos());
     }
-
     @Override
     public String toString() {
         return "Bullet{" +

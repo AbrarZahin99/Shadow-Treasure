@@ -46,7 +46,7 @@ public class Immovables implements Comparable<Immovables>{
     public boolean meets(Movables movable) {
         boolean hasMet = false;
         double distanceToPlayer = movable.getPos().distanceTo(pos);
-        if (distanceToPlayer < ShadowTreasure.ClOSENESS) {
+        if (distanceToPlayer < ShadowTreasure.CLOSENESS) {
             hasMet = true;
         }
         return hasMet;

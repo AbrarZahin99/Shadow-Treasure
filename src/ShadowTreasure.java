@@ -1,4 +1,5 @@
 import bagel.*;
+import bagel.util.Point;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -8,18 +9,20 @@ import java.util.Collections;
 /**
  * An example Bagel game.
  */
+// Some methods have been copied from Project-1
 public class ShadowTreasure extends AbstractGame {
 
     private final Image BACKGROUND = new Image("res/images/background.png");
-    public static final int ClOSENESS = 50;
+    public static final int CLOSENESS = 50;
     public static final int SHOOTING_RANGE = 150;
 
     // for rounding double number
-  //  private static final DecimalFormat df = new DecimalFormat("0.00");
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     // tick cycle and var
-    private final int TICK_CYCLE = 2;
+    private final int TICK_CYCLE = 1;
     private int tick;
+    private boolean endOfGame = false;
 
     // list of characters
     private Player player;
@@ -28,7 +31,7 @@ public class ShadowTreasure extends AbstractGame {
     private Treasure treasure;
     private Bullet bullet;
 
-
+    // List of getters and setters to be used in bullet and player classes
     public Player getPlayer() {
         return player;
     }
@@ -44,18 +47,24 @@ public class ShadowTreasure extends AbstractGame {
     public Treasure getTreasure() {
         return treasure;
     }
+    public void setEndOfGame(boolean endOfGame) {
+        this.endOfGame = endOfGame;
+    }
 
+    /**
+     * Constructor for the ShadowTreasure class
+     */
     public ShadowTreasure() throws IOException {
         //super(900, 600, "Treasure Hunt");
         this.loadEnvironment("res/IO/environment.csv");
         this.tick = 1;
-       // System.out.println(player.getPos().x + "," + player.getPos().y + "," + player.getEnergy());
         bullet = new Bullet(player.getPosX(), player.getPosY());
     }
 
     /**
      * Load from input file
      */
+    // Copied from sample solution
     private void loadEnvironment(String filename){
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -82,6 +91,7 @@ public class ShadowTreasure extends AbstractGame {
     /**
      * Performs a state update.
      */
+    // Some blocks for update has been copied from sample solution
     @Override
     public void update(Input input) {
         if (input.wasPressed(Keys.ESCAPE)){
@@ -102,9 +112,6 @@ public class ShadowTreasure extends AbstractGame {
                 // update player status
                 player.update(this);
                 tick = 1;
-                  //  System.out.println(df.format(player.getPos().x) + ","
-               //             + df.format(player.getPos().y) + "," + player.getEnergy());
-
             }
             tick++;
             for (Zombie zombie : zombies) {
@@ -116,6 +123,20 @@ public class ShadowTreasure extends AbstractGame {
             treasure.draw();
             player.render();
             if(bullet.getIsPresent()){bullet.render();}
+
+            if(endOfGame){
+                FileWriter writer;
+                try {
+                    writer = new FileWriter("res/IO/output.csv");
+                    for(Point point : bullet.getBullets()){
+                    writer.write(df.format(point.x) + ","
+                            + df.format(point.y) + "\n");
+                    }
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
