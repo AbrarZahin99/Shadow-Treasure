@@ -1,6 +1,9 @@
 import bagel.Image;
 import bagel.util.Point;
 
+/**
+ * Provides a template for inheritance for bullet and player classes
+ */
 public abstract class Movables {
 
     // image
@@ -50,6 +53,11 @@ public abstract class Movables {
     }
 
     // Method to return the x,y co-ordinates as a point
+
+    /**
+     * Method to get the location of movables as a point
+     * @returns the position of the object as Point
+     */
     public Point getPos(){
         return new Point(posX, posY);
     }
@@ -64,7 +72,11 @@ public abstract class Movables {
     /* Method to move the player forward */
     protected abstract void moveForward();
 
+
     /* Method to render the image */
+    /**
+     * Methods to render the image
+     */
     public void render(){
         image.drawFromTopLeft(posX, posY);
     }

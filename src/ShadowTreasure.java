@@ -12,6 +12,7 @@ import java.util.Collections;
 // Some methods have been copied from Project-1
 public class ShadowTreasure extends AbstractGame {
 
+    // Set of declared constants
     private final Image BACKGROUND = new Image("res/images/background.png");
     public static final int CLOSENESS = 50;
     public static final int SHOOTING_RANGE = 150;
@@ -20,11 +21,13 @@ public class ShadowTreasure extends AbstractGame {
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     // tick cycle and var
-    private final int TICK_CYCLE = 1;
+    private final int TICK_CYCLE = 10;
     private int tick;
+
+    // State to keep track of end of game
     private boolean endOfGame = false;
 
-    // list of characters
+    // list of entities
     private Player player;
     private ArrayList<Sandwich> sandwiches = new ArrayList<>();
     private ArrayList<Zombie> zombies = new ArrayList<>();
@@ -32,28 +35,61 @@ public class ShadowTreasure extends AbstractGame {
     private Bullet bullet;
 
     // List of getters and setters to be used in bullet and player classes
+
+    /**
+     * Getter for player in the shadowtreasure game
+     * @return the player exisiting in this game
+     */
     public Player getPlayer() {
         return player;
     }
+
+    /**
+     * Getter to access the arraylist
+     * @return an arraylist consisting of all sandwiches
+     */
     public ArrayList<Sandwich> getSandwiches() {
         return sandwiches;
     }
+
+    /**
+     * Getter to access the arraylist
+     * @return an arraylist consisting of all zombies
+     */
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
+
+    /**
+     * Getter to access the bullet in the shadowtreasure game
+     * @return The bullet that exists in this game
+     */
     public Bullet getBullet() {
         return bullet;
     }
+
+    /**
+     * Getter to access the game's treasure
+     * @return The treasure that exists in this game
+     */
     public Treasure getTreasure() {
         return treasure;
     }
+
+    /**
+     * Setter for the end of game status attribute
+     * @param endOfGame A boolean variable which is set to true
+     * if required conditions for the game to end are met
+     */
     public void setEndOfGame(boolean endOfGame) {
         this.endOfGame = endOfGame;
     }
 
     /**
-     * Constructor for the ShadowTreasure class
+     * Consturctor for ShadowTreasure
+     * @throws IOException
      */
+
     public ShadowTreasure() throws IOException {
         //super(900, 600, "Treasure Hunt");
         this.loadEnvironment("res/IO/environment.csv");
@@ -90,6 +126,7 @@ public class ShadowTreasure extends AbstractGame {
 
     /**
      * Performs a state update.
+     * @param input A bagel class
      */
     // Some blocks for update has been copied from sample solution
     @Override

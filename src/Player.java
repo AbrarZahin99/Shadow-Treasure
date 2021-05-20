@@ -3,7 +3,9 @@ import bagel.Font;
 import bagel.util.Colour;
 import bagel.util.Point;
 
-
+/**
+ * Represents the moving player of the game
+ */
 public class Player extends Movables{
 
     // Steps moved every tick_cycle
@@ -19,15 +21,25 @@ public class Player extends Movables{
     private int energy;
 
     // boolean to keep track of whether treasure was reached
-    public boolean treasure_reached = false;
+    private boolean treasure_reached = false;
 
     // constructor for the player class
+    /**
+     *
+     * @param x the x co-ord of player
+     * @param y the y co-ord of player
+     * @param energy Current energy level of the player
+     */
     public Player(double x, double y, int energy) {
         super(x,y);
         this.energy = energy;
         setImage("res/images/player.png");
     }
 
+    /**
+     *
+     * @return returns a Point class for use in other methods
+     */
     public Point getPos(){
         return new Point(getPosX(), getPosY());
     }
@@ -40,6 +52,10 @@ public class Player extends Movables{
     }
 
     // Some code has been copied from sample solution
+    /**
+     * Method to implement movements of the player according to Algorithm 1
+     * @param tomb is the board in which the game is played
+     */
     public void update(ShadowTreasure tomb){
         Zombie closestZombie;
         Sandwich closestSandwich;
@@ -92,6 +108,9 @@ public class Player extends Movables{
 
 
     /* Renders the images of the player and the font */
+    /**
+     * Overriden method to render the player's location and display the energy state
+     */
     @Override
     public void render() {
         getImage().drawFromTopLeft(getPosX(), getPosY());
@@ -105,11 +124,15 @@ public class Player extends Movables{
         energy += 5;
     }
     //  Shoots and decreases energy by 3
+
+    /**
+     * Reduces Player's energy by 1 upon shooting the bullet
+     */
     public void shootBullet(){
         energy -= 3;
     }
-    // Treasure obtained and game ends next turn
-    public void treasure_obtained(){
+    // Treasure obtained and game ends at the start of next turn
+    private void treasure_obtained(){
         treasure_reached = true;
     }
 

@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import bagel.util.Point;
 
+/**
+ * Class to represent the bullet that the player shoots
+ */
 public class Bullet extends Movables {
 
     public static final double STEP_SIZE = 25;
@@ -30,6 +33,10 @@ public class Bullet extends Movables {
         setPosY(getPosY() + STEP_SIZE * getDirectionY());
     }
 
+    /**
+     Method to implement movements of the bullet according to Algorithm 1
+     * @param tomb is the board in which the game is played
+     */
     /* Method that updates the location of bullet based on whether it was shot */
     public void update(ShadowTreasure tomb){
         /* Sets the position and presence of the bullet based on
