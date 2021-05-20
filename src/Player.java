@@ -25,7 +25,7 @@ public class Player extends Movables{
 
     // constructor for the player class
     /**
-     *
+     * Constructor for player class
      * @param x the x co-ord of player
      * @param y the y co-ord of player
      * @param energy Current energy level of the player
@@ -37,7 +37,7 @@ public class Player extends Movables{
     }
 
     /**
-     *
+     * Method to get player's location as a point
      * @return returns a Point class for use in other methods
      */
     public Point getPos(){
@@ -78,9 +78,8 @@ public class Player extends Movables{
                 System.out.println(",success!");
             }
             Window.close();}
-        else
-            // Code determining whether player close enough to shoot or eat
-            {
+        else {
+            // Code determining whether player is close enough to shoot or eat
             if (closestSandwich != null && closestSandwich.meets(this)) {
                 eatSandwich();
                 tomb.getSandwiches().remove(0);
@@ -105,7 +104,6 @@ public class Player extends Movables{
             moveForward();
         }
     }
-
 
     /* Renders the images of the player and the font */
     /**

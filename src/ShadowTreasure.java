@@ -9,7 +9,7 @@ import java.util.Collections;
 /**
  * An example Bagel game.
  */
-// Some methods have been copied from Project-1
+// Some methods have been copied from Project-1 sample solution
 public class ShadowTreasure extends AbstractGame {
 
     // Set of declared constants
@@ -165,7 +165,7 @@ public class ShadowTreasure extends AbstractGame {
                 FileWriter writer;
                 try {
                     writer = new FileWriter("res/IO/output.csv");
-                    for(Point point : bullet.getBullets()){
+                    for(Point point : bullet.getBulletPositions()){
                     writer.write(df.format(point.x) + ","
                             + df.format(point.y) + "\n");
                     }

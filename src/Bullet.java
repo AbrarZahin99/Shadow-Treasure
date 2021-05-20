@@ -9,21 +9,35 @@ public class Bullet extends Movables {
     public static final double STEP_SIZE = 25;
     public static final int KILLING_RANGE = 25;
     private boolean isPresent = false;
-    private ArrayList<Point> bullets = new ArrayList<>();
+    private ArrayList<Point> bulletPositions = new ArrayList<>();
 
     /* Constructor for the bullet class */
+    /**
+     * Constructor for bullet class
+     * @param x x co-ord
+     * @param y y co-ord
+     */
     public Bullet(double x, double y) {
         super(x, y);
         setImage("res/images/shot.png");
     }
 
+
     /* Getter for isPresent */
+    /**
+     * Getter to check presense of bullet
+     * @return A boolean which returns true if bullet is present in game
+     */
     public boolean getIsPresent() {
         return isPresent;
     }
 
-    public ArrayList<Point> getBullets() {
-        return bullets;
+    /**
+     * Getter for the list of bullet movements
+     * @return An arraylist containing records of all bullet movement
+     */
+    public ArrayList<Point> getBulletPositions() {
+        return bulletPositions;
     }
 
     /* Method to move the bullet forward */
@@ -49,7 +63,7 @@ public class Bullet extends Movables {
             setPosY(tomb.getPlayer().getPosY());
             this.isPresent = true;
             this.setDirectionTo(closestZombie.getPos());
-            bullets.add(this.getPos());
+            bulletPositions.add(this.getPos());
         }
 
         if(tomb.getZombies().size() == 0) this.isPresent = false;
@@ -62,13 +76,6 @@ public class Bullet extends Movables {
                 tomb.getZombies().remove(0);
             }
         }
-        bullets.add(this.getPos());
-    }
-    @Override
-    public String toString() {
-        return "Bullet{" +
-                "posX=" + getPosX() +
-                ", posY=" + getPosY() +
-                '}';
+        bulletPositions.add(this.getPos());
     }
 }
